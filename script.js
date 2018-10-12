@@ -4458,7 +4458,7 @@ githubData.forEach((event) => {
   for (const eventData in event) {
     if (eventData === "payload") {
       if (githubData[i].payload.hasOwnProperty("pull_request")){
-        if(githubData[i].payload.pull_request.user.login !== "stevebrownlee" && githubData[i].payload.pull_request.merge_commit_sha !== null){
+        if(githubData[i].payload.pull_request.user.login !== "stevebrownlee" && githubData[i].payload.pull_request.merged == true){
           pullRequests.push(githubData[i].payload.pull_request.user.login)
         }
 
