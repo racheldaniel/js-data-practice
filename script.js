@@ -4414,13 +4414,13 @@ let commitCount = 0
 
 
 githubData.forEach((event) => {
-  let eventIndex = githubData.indexOf(event)
-    for (const eventData in event) {
-      if (eventData ==="payload") {
-        for(const payloadData in githubData[eventIndex].payload){
-          if (payloadData ==="commits") {
-            let count = "commits".length;
-            commitCount += count;
+  let i = githubData.indexOf(event)
+  for (const eventData in event) {
+    if (eventData === "payload") {
+      for (const payloadData in githubData[i].payload) {
+        if (payloadData === "commits") {
+          let count = githubData[i].payload.commits.length;
+          commitCount += count;
         }
       }
     }
@@ -4428,3 +4428,25 @@ githubData.forEach((event) => {
 })
 
 console.log(commitCount)
+// Objective 2: How many of each event type are there? (PullRequestEvent, PushEvent, etc)
+
+
+//first I pushed all event types into an array
+const allEvents = []
+
+githubData.forEach((event) => {
+  let i = githubData.indexOf(event)
+  allEvents.push(githubData[i].type)
+})
+
+
+// I created a new object, then iterated through the allEvents array I just created. The function makes the current array item a key in eventCounts, checks to see if it already exists, and adds a counter.
+
+
+const eventCounts  = {};
+allEvents.forEach((i) => { 
+  eventCounts[i] = (eventCounts[i] || 0)+1; 
+});
+
+
+console.log(eventCounts)
