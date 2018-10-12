@@ -4469,3 +4469,26 @@ githubData.forEach((event) => {
 
 console.log(pullRequests)
 
+// Objective 4: List all repositories on which Steve had an event, and show how many events were on each one.
+
+const repoEvents  = {};
+
+repos = []
+githubData.forEach((event) => {
+  let i = githubData.indexOf(event)
+  for (const eventData in event) {
+    if (eventData === "repo") {
+    repos.push(githubData[i].repo.id)
+    }
+  }
+})
+
+repoCount = {}
+repos.forEach((i) => { 
+  repoCount[i] = (repoCount[i] || 0)+1; 
+});
+
+console.log(repoCount)
+
+
+
