@@ -4421,7 +4421,7 @@ githubData.forEach((event) => {
         if (payloadData === "commits") {
           let count = githubData[i].payload.commits.length;
           commitCount += count;
-        }
+        } 
       }
     }
   }
@@ -4435,10 +4435,8 @@ console.log(commitCount)
 const allEvents = []
 
 githubData.forEach((event) => {
-  let i = githubData.indexOf(event)
-  allEvents.push(githubData[i].type)
+  allEvents.push(event.type)
 })
-
 
 // I created a new object, then iterated through the allEvents array I just created. The function makes the current array item a key in eventCounts, checks to see if it already exists, and adds a counter.
 
@@ -4450,3 +4448,24 @@ allEvents.forEach((i) => {
 
 
 console.log(eventCounts)
+
+
+//Objective 3: List all Github users who submitted a pull request that was approved by Steve.
+
+pullRequests = []
+githubData.forEach((event) => {
+  let i = githubData.indexOf(event)
+  for (const eventData in event) {
+    if (eventData === "payload") {
+      if (githubData[i].payload.hasOwnProperty("pull_request")){
+        if(githubData[i].payload.pull_request.user.login !== "stevebrownlee" && githubData[i].payload.pull_request.merge_commit_sha !== null){
+          pullRequests.push(githubData[i].payload.pull_request.user.login)
+        }
+
+      }
+    }
+  }
+})
+
+console.log(pullRequests)
+
