@@ -4474,8 +4474,7 @@ console.log(pullRequests)
 const repoEvents  = {};
 
 repos = []
-githubData.forEach((event) => {
-  let i = githubData.indexOf(event)
+githubData.forEach((event,i) => {
   for (const eventData in event) {
     if (eventData === "repo") {
     repos.push(githubData[i].repo.id)
@@ -4490,5 +4489,20 @@ repos.forEach((i) => {
 
 console.log(repoCount)
 
+// Objective 5: Which event had the most number of commits?
 
+let eventID = ""
+let eventCommitCount = 0
+githubData.forEach((event, i) => {
+  if (event.hasOwnProperty("payload")) {
+    if (githubData[i]["payload"].hasOwnProperty("commits")){
+      if (githubData[i]["payload"]["commits"].length > eventCommitCount){
+        eventCommitCount = githubData[i]["payload"]["commits"].length
+        eventID = githubData[i]["id"]
+      }
+    }
+  }
+  return eventID
+})
 
+console.log(`event ID: ${eventID}, Commit count: ${eventCommitCount}`)
