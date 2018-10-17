@@ -4506,3 +4506,19 @@ githubData.forEach((event, i) => {
 })
 
 console.log(`event ID: ${eventID}, Commit count: ${eventCommitCount}`)
+
+// Objective 6: Which programming langugages were affected by Steve's events?
+// Objective 7: What programming language was the most affected by Steve's events?
+
+//I created a loop that returns both the languages used and the count of their use to complete both objectives.
+
+let languages = {}
+
+githubData.forEach((event) => {
+    if (event.payload.hasOwnProperty("pull_request") === true) {
+          let i = event.payload.pull_request.head.repo.language 
+          languages[i] = (languages[i] || 0) + 1
+      }
+  })
+console.log(languages)
+
