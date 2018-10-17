@@ -4516,8 +4516,8 @@ let languages = {}
 
 githubData.forEach((event) => {
     if (event.payload.hasOwnProperty("pull_request") === true) {
-          let i = event.payload.pull_request.head.repo.language 
-          languages[i] = (languages[i] || 0) + 1
+          let currentLang = event.payload.pull_request.head.repo.language 
+          languages[currentLang] = (languages[currentLang] || 0) + 1
       }
   })
 console.log(languages)
