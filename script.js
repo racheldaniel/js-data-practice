@@ -4458,7 +4458,7 @@ githubData.forEach((event) => {
   for (const eventData in event) {
     if (eventData === "payload") {
       if (githubData[i].payload.hasOwnProperty("pull_request")){
-        if(githubData[i].payload.pull_request.user.login !== "stevebrownlee" && githubData[i].payload.pull_request.merge_commit_sha !== null){
+        if(githubData[i].payload.pull_request.user.login !== "stevebrownlee" && githubData[i].payload.pull_request.merged == true){
           pullRequests.push(githubData[i].payload.pull_request.user.login)
         }
 
@@ -4474,8 +4474,7 @@ console.log(pullRequests)
 const repoEvents  = {};
 
 repos = []
-githubData.forEach((event) => {
-  let i = githubData.indexOf(event)
+githubData.forEach((event,i) => {
   for (const eventData in event) {
     if (eventData === "repo") {
     repos.push(githubData[i].repo.id)
@@ -4490,5 +4489,36 @@ repos.forEach((i) => {
 
 console.log(repoCount)
 
+// Objective 5: Which event had the most number of commits?
 
+let eventID = ""
+let eventCommitCount = 0
+githubData.forEach((event, i) => {
+  if (event.hasOwnProperty("payload")) {
+    if (githubData[i]["payload"].hasOwnProperty("commits")){
+      if (githubData[i]["payload"]["commits"].length > eventCommitCount){
+        eventCommitCount = githubData[i]["payload"]["commits"].length
+        eventID = githubData[i]["id"]
+      }
+    }
+  }
+  return eventID
+})
+
+console.log(`event ID: ${eventID}, Commit count: ${eventCommitCount}`)
+
+// Objective 6: Which programming langugages were affected by Steve's events?
+// Objective 7: What programming language was the most affected by Steve's events?
+
+//I created a loop that returns both the languages used and the count of their use to complete both objectives.
+
+let languages = {}
+
+githubData.forEach((event) => {
+    if (event.payload.hasOwnProperty("pull_request") === true) {
+          let i = event.payload.pull_request.head.repo.language 
+          languages[i] = (languages[i] || 0) + 1
+      }
+  })
+console.log(languages)
 
